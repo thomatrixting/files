@@ -22,4 +22,4 @@ function create_root {
 
 $root = create_root 
 
-download_from_web -url "https://thomatrixting.github.io/files/notifications_df.txt" -path ($root+"notifications_df.txt")
+download_from_web -url "https://thomatrixting.github.io/files/notifications_df.txt" -path ($root+"\notifications_df.txt")
