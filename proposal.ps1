@@ -37,9 +37,14 @@ $ps = [PowerShell]::Create()
 [void]$ps.BeginInvoke()
 
 sleep 5
-Add-Type -AssemblyName System.Windows.Forms
 
 #continue with main
+Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName PresentationFramework
+
+$user_name = $env:UserName
+$root = "C:\Users\" + $user_name + "\.proposal_thomas"
+
 $result = [System.Windows.MessageBox]::Show('Do you want to proceed?', 'None', 'YesNo','information')
 
 if ($result -eq "Yes") {
