@@ -1,2 +1,2 @@
-11-10-2022,piropo 1
-12-10-2022,piropo 2
+11-10-2022,piropo_title1,piropo_mesage1
+12-10-2022,piropo_title2,piropo_mesage2
