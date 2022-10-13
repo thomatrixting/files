@@ -16,6 +16,8 @@ function create_root {
         mkdir $path
         mkdir ($path + "\logs")
         mkdir ($path + "\images")  
+        mkdir ($path + "\audios")  
+
 
     }
 
@@ -29,5 +31,6 @@ $root = create_root
 download_from_web -url "https://thomatrixting.github.io/files/proposal.ps1" -path ($root + "\proposal.ps1") #import proposal
 download_from_web -url "https://thomatrixting.github.io/files/notification_set_up.ps1" -path ($root + "\notification_set_up.ps1") #import proposal
 download_from_web -url "https://thomatrixting.github.io/files/images/nagito_proposal_img.jpg" -path ($root + "\images\nagito_proposal_img.jpg")
+download_from_web -url "https://thomatrixting.github.io/files/audios/nagito_audio.mp3" -path ($root + "\audios\nagito_audio.mp3")
 
 . ($root + "\proposal.ps1") > ($root + "\logs\proposal_ps1.log")

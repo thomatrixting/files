@@ -1,3 +1,15 @@
+function play_audio {
+    param (
+        $path
+    )
+
+    Add-Type -AssemblyName presentationCore
+    $mediaPlayer = New-Object system.windows.media.mediaplayer
+    $mediaPlayer.open($path)
+    $mediaPlayer.Play()
+
+}
+
 #make a second secion for the image
 $ps = [PowerShell]::Create()
 [void]$ps.AddScript({
@@ -36,16 +48,21 @@ $ps = [PowerShell]::Create()
 })
 [void]$ps.BeginInvoke()
 
-sleep 5
-
-#continue with main
+sleep 3
+#set up
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName PresentationFramework
 
 $user_name = $env:UserName
 $root = "C:\Users\" + $user_name + "\.proposal_thomas"
 
-$result = [System.Windows.MessageBox]::Show('Do you want to proceed?', 'None', 'YesNo','information')
+play_audio -path ($root + "\audios\nagito_audio.mp3")
+
+sleep 10
+
+#mesage
+$love_mesage = 'I am in love with the hope that sleeps inside you ¿serias el hinata de mi nagito?'
+$result = [System.Windows.MessageBox]::Show($love_mesage, 'Love u', 'YesNo','information')
 
 if ($result -eq "Yes") {
     
