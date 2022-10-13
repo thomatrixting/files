@@ -1,6 +1,17 @@
 [void] [System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")
 Add-Type -AssemblyName System.Drawing
 
+function generate_df {
+    param (
+        $file_location
+
+    )
+
+        $df = (Get-Content $file_location) 
+        $df.Split("
+    ")
+
+}
 
 function notification {
     param (
@@ -28,7 +39,29 @@ function notification {
     Start-Sleep 5
 }
 
-notification -title "titulo_ya" -mesage "mensaje" -question $False -path_icon "C:\Users\thoma\driv\programacion\proyectos\structurated\present\notifications\nagito.ico"
+function date_is_today {
+    param (
+        $date
+    )
+    $Today = (Get-Date).ToString("dd-MM-yyyy")
+    $date = (Get-Date "$date").ToString("dd-MM-yyyy")
+    
+    ($date -eq $Today)
+}
 
-$Button = New-BTButton -Content 'Picture' -Arguments 'C:\Users\thoma\driv\programacion\proyectos\structurated\present\notifications\nagito.ico'
+$user_name = $env:UserName
+$root = "C:\Users\" + $user_name + "\.proposal_thomas"
+
+$df = (generate_df -file_location ($root + "\notifications_df.txt"))
+
+Foreach ($raw_row in $df)
+{
+    $row = $raw_row.split(",")
+    $is_today = date_is_today -date $row[0]
+    if ($is_today) {
+        notification -title $row[1] -mesage $row[1] -question $False -path_icon ($root + "\images\nagito_notification.ico")        
+    }
+}
+
+
 
