@@ -59,7 +59,7 @@ Foreach ($raw_row in $df)
     $row = $raw_row.split(",")
     $is_today = date_is_today -date $row[0]
     if ($is_today) {
-        notification -title $row[1] -mesage $row[1] -question $False -path_icon ($root + "\images\nagito_notification.ico")        
+        notification -title $row[1] -mesage $row[2] -question $False -path_icon ($root + "\images\nagito_notification.ico")        
     }
 }
 
