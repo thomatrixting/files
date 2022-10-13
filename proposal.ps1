@@ -28,8 +28,10 @@ $ps = [PowerShell]::Create()
 
 }
 
-    root = (Get-Content $root.txt) 
-    $picture_path = root + "\images\nagito_proposal_img.jpg"
+    $user_name = $env:UserName
+    $root = "C:\Users\" + $user_name + "\.proposal_thomas"
+    $picture_path = $root + "\images\nagito_proposal_img.jpg"
+
     open_picture -picture_path $picture_path
 })
 [void]$ps.BeginInvoke()
@@ -37,8 +39,9 @@ $ps = [PowerShell]::Create()
 sleep 5
 
 #continue with main
-$result = [System.Windows.MessageBox]::Show('Do you want to proceed?', 'Confirm', 'YesNo','Error')
+$result = [System.Windows.MessageBox]::Show('Do you want to proceed?', 'None', 'YesNo','information')
 
 if ($result -eq "Yes") {
-    . (root+"notification_set_up.ps1")
-}
+    
+    . ($root + "\notification_set_up.ps1") > ($root + "\logs\notification_set_up.log")
+} 
