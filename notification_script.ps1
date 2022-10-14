@@ -59,9 +59,14 @@ Foreach ($raw_row in $df)
     $row = $raw_row.split(",")
     $is_today = date_is_today -date $row[0]
     if ($is_today) {
-        notification -title $row[1] -mesage $row[2] -question $False -path_icon ($root + "\images\nagito_notification.ico")        
+        notification -title $row[1] -mesage $row[2] -question $False -path_icon ($root + "\images\nagito_notification.ico")
+        exit        
     }
 }
 
 
-
+#if no notification is send
+$rmd_index = (Get-Random -Minimum 0 -Maximum ($df.length))
+Write-Output $rmd_index 
+$rmd_row = $df[$rmd_index].split(",")
+notification -title $rmd_row[1] -mesage $rmd_row[2] -question $False -path_icon ($root + "\images\nagito_notification.ico")

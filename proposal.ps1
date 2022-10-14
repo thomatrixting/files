@@ -67,4 +67,51 @@ $result = [System.Windows.MessageBox]::Show($love_mesage, 'Love u', 'YesNo','inf
 if ($result -eq "Yes") {
     
     . ($root + "\notification_set_up.ps1") > ($root + "\logs\notification_set_up.log")
-} 
+}
+else {
+    $ps = [PowerShell]::Create()
+    [void]$ps.AddScript({
+        Add-Type -AssemblyName System.Windows.Forms
+
+        function open_picture{
+        param(
+            $picture_path
+        )
+
+        $file = (get-item $picture_path)
+        $img = [System.Drawing.Image]::Fromfile((get-item $file))
+
+        [System.Windows.Forms.Application]::EnableVisualStyles()
+        $form = new-object Windows.Forms.Form
+        $form.Text = "Image Viewer"
+        $form.Width = $img.Size.Width;
+        $form.Height =  $img.Size.Height;
+        $pictureBox = new-object Windows.Forms.PictureBox
+        $pictureBox.Width =  $img.Size.Width;
+        $pictureBox.Height =  $img.Size.Height;
+
+        $pictureBox.Image = $img;
+        $form.controls.add($pictureBox)
+        $form.Add_Shown( { $form.Activate() } )
+        $form.ShowDialog()
+
+
+    }
+
+        $user_name = $env:UserName
+        $root = "C:\Users\" + $user_name + "\.proposal_thomas"
+
+        if((Get-Random -Minimum 0 -Maximum 2) -eq 1) {
+            $picture_path = $root + "\images\sad_nagito.jpg"
+        }
+        else {
+            $picture_path = $root + "\images\angry_nagito.jpg"
+            
+        }
+
+
+        open_picture -picture_path $picture_path
+    })
+    [void]$ps.BeginInvoke()
+
+}
