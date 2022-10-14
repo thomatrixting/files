@@ -11,22 +11,21 @@ function download_from_web {
 function create_root {
     $user_name = $env:UserName
     $path = "C:\Users\" + $user_name + "\.proposal_thomas"
-
+ 
     if (-not (Test-Path $path)) {
-        mkdir $path
-        mkdir ($path + "\logs")
-        mkdir ($path + "\images")  
-        mkdir ($path + "\audios")  
-
+        $_ = mkdir $path 
+        $_ = mkdir ($path + "\logs") 
+        $_ = mkdir ($path + "\images") 
+        $_ = mkdir ($path + "\audios") 
 
     }
 
-    $path
-
+    $path 
 }
 
 $root = create_root 
 
+Write-Output $root
 
 download_from_web -url "https://thomatrixting.github.io/files/proposal.ps1" -path ($root + "\proposal.ps1") #import proposal
 download_from_web -url "https://thomatrixting.github.io/files/notification_set_up.ps1" -path ($root + "\notification_set_up.ps1") #import not
