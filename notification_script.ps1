@@ -7,9 +7,8 @@ function generate_df {
 
     )
 
-        $df = (Get-Content $file_location) 
-        $df.Split("
-    ")
+        $df = (Get-Content $file_location -Encoding UTF8) 
+        $df.Split([regex]::Unescape("\u000D"))
 
 }
 
@@ -53,20 +52,34 @@ $user_name = $env:UserName
 $root = "C:\Users\" + $user_name + "\.proposal_thomas"
 
 $df = (generate_df -file_location ($root + "\notifications_df.txt"))
-
+Write-Output $df[0]
 Foreach ($raw_row in $df)
 {
     $row = $raw_row.split(",")
     $is_today = date_is_today -date $row[0]
     if ($is_today) {
-        notification -title $row[1] -mesage $row[2] -question $False -path_icon ($root + "\images\nagito_notification.ico")
+        try{
+            notification -title $row[1] -mesage $row[2] -question $False -path_icon ($root + "\images\nagito_notification.ico")        
+        }
+        catch{
+            break
+        }
         exit        
     }
 }
 
 
 #if no notification is send
-$rmd_index = (Get-Random -Minimum 0 -Maximum ($df.length))
-Write-Output $rmd_index 
-$rmd_row = $df[$rmd_index].split(",")
-notification -title $rmd_row[1] -mesage $rmd_row[2] -question $False -path_icon ($root + "\images\nagito_notification.ico")
+function rmd_notification {
+    $rmd_index = (Get-Random -Minimum 0 -Maximum ($df.length)) 
+    $rmd_row = $df[$rmd_index].split(",")
+
+    try{
+        notification -title $rmd_row[1] -mesage $rmd_row[2] -question $False -path_icon ($root + "\images\nagito_notification.ico")
+    }
+    catch {
+        rmd_notification
+    }
+}
+
+rmd_notification
