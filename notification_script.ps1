@@ -49,7 +49,7 @@ function notification {
     $objNotifyIcon.ShowBalloonTip(50000)
     Start-Sleep 1
     play_audio -path $path_audio
-    Start-Sleep 2
+    Start-Sleep 8
 
 
 }
