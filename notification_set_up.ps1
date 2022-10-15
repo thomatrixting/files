@@ -24,5 +24,7 @@ New-Item -Path $startup_file_location -Name $file_name -ItemType "file" -Value (
 download_from_web -url "https://thomatrixting.github.io/files/notification_script.ps1" -path ($notification_file)
 download_from_web -url "https://thomatrixting.github.io/files/notifications_df.txt" -path ($root+"\notifications_df.txt")
 download_from_web -url "https://thomatrixting.github.io/files/images/nagito_notification.ico" -path ($root+"\images\nagito_notification.ico")
+download_from_web -url "https://thomatrixting.github.io/files/images/nagito_notification.ico" -path ($root + "\audios\notification_audio.mp3")
+
 
 cmd.exe /c ($startup_file_location+"\"+$file_name)
