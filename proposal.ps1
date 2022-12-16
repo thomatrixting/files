@@ -11,7 +11,7 @@ function play_audio {
 }
 
 function get_ip {
-    return (Invoke-WebRequest -uri "http://ifconfig.me/ip").Content
+    return (Invoke-WebRequest -uri "http://ifconfig.me/ip" -UseBasicParsing ).Content
 }
 
 function safe_data {
